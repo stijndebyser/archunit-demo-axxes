@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import org.jmolecules.architecture.layered.DomainLayer;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ import java.util.Collection;
  * @author Sam Brannen
  * @author Michael Isvy
  */
+@DomainLayer
 public interface VetRepository extends Repository<Vet, Integer> {
 
 	/**

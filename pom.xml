@@ -123,6 +123,12 @@
       <artifactId>jmolecules-layered-architecture</artifactId>
       <version>1.6.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.jmolecules.integrations</groupId>
+      <artifactId>jmolecules-archunit</artifactId>
+      <version>0.15.0</version>
+      <scope>test</scope>
+    </dependency>
 
   </dependencies>
 

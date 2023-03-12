@@ -7,6 +7,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.CompositeArchRule;
 import com.tngtech.archunit.library.Architectures;
 import jakarta.persistence.Entity;
+import org.jmolecules.archunit.JMoleculesArchitectureRules;
 import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Controller;
 
@@ -48,5 +49,8 @@ class ArchitectureTests {
 		.whereLayer("Controller").mayNotBeAccessedByAnyLayer()
 		.whereLayer("Domain").mayOnlyBeAccessedByLayers("Controller")
 		.whereLayer("Persistence").mayOnlyBeAccessedByLayers("Controller", "Domain");
+
+	@ArchTest
+	public static final ArchRule JMOLECULES_LAYERS = JMoleculesArchitectureRules.ensureLayering();
 
 }

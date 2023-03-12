@@ -5,9 +5,14 @@ import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.CompositeArchRule;
+import com.tngtech.archunit.library.Architectures;
+import jakarta.persistence.Entity;
+import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Controller;
 
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.assignableTo;
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideInAPackage;
+import static com.tngtech.archunit.core.domain.properties.CanBeAnnotated.Predicates.annotatedWith;
 import static com.tngtech.archunit.lang.conditions.ArchConditions.dependOnClassesThat;
 import static com.tngtech.archunit.lang.conditions.ArchConditions.not;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
@@ -33,5 +38,15 @@ class ArchitectureTests {
 			classes()
 				.that().resideInAPackage("..vet..")
 				.should(not(dependOnClassesThat(resideInAPackage("..owner..")))));
+
+	@ArchTest
+	public static final ArchRule LAYERS = Architectures.layeredArchitecture()
+		.consideringOnlyDependenciesInLayers()
+		.layer("Controller").definedBy(annotatedWith(Controller.class))
+		.layer("Domain").definedBy(assignableTo(Repository.class))
+		.layer("Persistence").definedBy(annotatedWith(Entity.class))
+		.whereLayer("Controller").mayNotBeAccessedByAnyLayer()
+		.whereLayer("Domain").mayOnlyBeAccessedByLayers("Controller")
+		.whereLayer("Persistence").mayOnlyBeAccessedByLayers("Controller", "Domain");
 
 }

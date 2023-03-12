@@ -118,6 +118,11 @@
       <version>1.0.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jmolecules</groupId>
+      <artifactId>jmolecules-layered-architecture</artifactId>
+      <version>1.6.0</version>
+    </dependency>
 
   </dependencies>
 

@@ -29,6 +29,7 @@ import static com.tngtech.archunit.lang.conditions.ArchConditions.dependOnClasse
 import static com.tngtech.archunit.lang.conditions.ArchConditions.not;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
+import static com.tngtech.archunit.library.freeze.FreezingArchRule.freeze;
 
 @AnalyzeClasses(packagesOf = PetClinicApplication.class, importOptions = DoNotIncludeTests.class)
 class ArchitectureTests {
@@ -66,9 +67,9 @@ class ArchitectureTests {
 	public static final ArchRule JMOLECULES_LAYERS = JMoleculesArchitectureRules.ensureLayering();
 
 	@ArchTest
-	public static final ArchRule CONTROLLER_SHOULD_LOG = methods()
+	public static final ArchRule CONTROLLER_SHOULD_LOG = freeze(methods()
 		.that().areAnnotatedWith(PostMapping.class)
-		.should(log());
+		.should(log()));
 
 	private static ArchCondition<? super JavaMethod> log() {
 		return new ArchCondition<>("log") {

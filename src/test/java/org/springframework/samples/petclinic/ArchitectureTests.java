@@ -35,7 +35,7 @@ import static com.tngtech.archunit.library.freeze.FreezingArchRule.freeze;
 class ArchitectureTests {
 
 	@ArchTest
-	public static final ArchRule CONTROLLER_NAMING = classes()
+	ArchRule ControllerNaming = classes()
 		.that().areAnnotatedWith(Controller.class)
 		.or().haveSimpleNameEndingWith("Controller")
 		.should().beAnnotatedWith(Controller.class)
@@ -43,7 +43,7 @@ class ArchitectureTests {
 		.because("controller should be easy to find");
 
 	@ArchTest
-	public static final ArchRule DEPENDENCIES_BETWEEN_MODULES = CompositeArchRule
+	ArchRule DependenciesBetweenModules = CompositeArchRule
 		.of(
 			classes()
 				.that().resideInAPackage("..owner..")
@@ -54,7 +54,7 @@ class ArchitectureTests {
 				.should(not(dependOnClassesThat(resideInAPackage("..owner..")))));
 
 	@ArchTest
-	public static final ArchRule LAYERS = Architectures.layeredArchitecture()
+	ArchRule Layers = Architectures.layeredArchitecture()
 		.consideringOnlyDependenciesInLayers()
 		.layer("Controller").definedBy(annotatedWith(Controller.class))
 		.layer("Domain").definedBy(assignableTo(Repository.class))
@@ -64,10 +64,10 @@ class ArchitectureTests {
 		.whereLayer("Persistence").mayOnlyBeAccessedByLayers("Controller", "Domain");
 
 	@ArchTest
-	public static final ArchRule JMOLECULES_LAYERS = JMoleculesArchitectureRules.ensureLayering();
+	ArchRule jMoleculesLayers = JMoleculesArchitectureRules.ensureLayering();
 
 	@ArchTest
-	public static final ArchRule CONTROLLER_SHOULD_LOG = freeze(methods()
+	ArchRule ControllerShouldLog = freeze(methods()
 		.that().areAnnotatedWith(PostMapping.class)
 		.should(log()));
 

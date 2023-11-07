@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -27,9 +28,11 @@ import static com.tngtech.archunit.lang.SimpleConditionEvent.satisfied;
 import static com.tngtech.archunit.lang.SimpleConditionEvent.violated;
 import static com.tngtech.archunit.lang.conditions.ArchConditions.dependOnClassesThat;
 import static com.tngtech.archunit.lang.conditions.ArchConditions.not;
+import static com.tngtech.archunit.lang.conditions.ArchPredicates.are;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
 import static com.tngtech.archunit.library.freeze.FreezingArchRule.freeze;
+import static de.rweisleder.archunit.spring.MergedAnnotationPredicates.springAnnotatedWith;
 
 @AnalyzeClasses(packagesOf = PetClinicApplication.class, importOptions = DoNotIncludeTests.class)
 class ArchitectureTests {
@@ -41,6 +44,11 @@ class ArchitectureTests {
 		.should().beAnnotatedWith(Controller.class)
 		.andShould().haveSimpleNameEndingWith("Controller")
 		.because("controller should be easy to find");
+
+	@ArchTest
+	ArchRule RequestMappingMethods = methods()
+		.that(are(springAnnotatedWith(RequestMapping.class)))
+		.should().beDeclaredInClassesThat(are(springAnnotatedWith(Controller.class)));
 
 	@ArchTest
 	ArchRule DependenciesBetweenModules = CompositeArchRule

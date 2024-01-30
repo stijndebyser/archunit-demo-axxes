@@ -33,6 +33,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
 import static com.tngtech.archunit.library.freeze.FreezingArchRule.freeze;
 import static de.rweisleder.archunit.spring.MergedAnnotationPredicates.springAnnotatedWith;
+import static de.rweisleder.archunit.spring.SpringComponentPredicates.springController;
 
 @AnalyzeClasses(packagesOf = PetClinicApplication.class, importOptions = DoNotIncludeTests.class)
 class ArchitectureTests {
@@ -48,7 +49,7 @@ class ArchitectureTests {
 	@ArchTest
 	ArchRule RequestMappingMethods = methods()
 		.that(are(springAnnotatedWith(RequestMapping.class)))
-		.should().beDeclaredInClassesThat(are(springAnnotatedWith(Controller.class)));
+		.should().beDeclaredInClassesThat(are(springController()));
 
 	@ArchTest
 	ArchRule DependenciesBetweenModules = CompositeArchRule

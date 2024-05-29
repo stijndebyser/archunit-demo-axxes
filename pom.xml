@@ -115,7 +115,7 @@
     <dependency>
       <groupId>com.tngtech.archunit</groupId>
       <artifactId>archunit-junit5</artifactId>
-      <version>1.2.1</version>
+      <version>1.3.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -126,13 +126,13 @@
     <dependency>
       <groupId>org.jmolecules.integrations</groupId>
       <artifactId>jmolecules-archunit</artifactId>
-      <version>0.18.0</version>
+      <version>0.20.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>de.rweisleder</groupId>
       <artifactId>archunit-spring</artifactId>
-      <version>0.2.0</version>
+      <version>1.0.0</version>
       <scope>test</scope>
     </dependency>
 

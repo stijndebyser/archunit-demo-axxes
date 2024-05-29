@@ -32,8 +32,8 @@ import static com.tngtech.archunit.lang.conditions.ArchPredicates.are;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
 import static com.tngtech.archunit.library.freeze.FreezingArchRule.freeze;
-import static de.rweisleder.archunit.spring.MergedAnnotationPredicates.springAnnotatedWith;
-import static de.rweisleder.archunit.spring.SpringComponentPredicates.springController;
+import static de.rweisleder.archunit.spring.SpringAnnotationPredicates.springAnnotatedWith;
+import static de.rweisleder.archunit.spring.framework.SpringComponentPredicates.springController;
 
 @AnalyzeClasses(packagesOf = PetClinicApplication.class, importOptions = DoNotIncludeTests.class)
 class ArchitectureTests {
